@@ -1,6 +1,6 @@
 import pytest
-from source.dataquery import DataQuery
-from source.time_function import time_register
+from source.admin_data_student.dataquery import DataQuery
+from source.admin_data_student.time_function import time_register
 
 
 @pytest.fixture

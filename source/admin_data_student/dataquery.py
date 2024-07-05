@@ -1,12 +1,12 @@
 import sqlite3
 from typing import Any
 
-from main import Student
-from time_function import time_register
+from ctr_data.Student import Student
+from ctr_data.function_time.time_function import time_register
 
 
 class DataQuery(Student):
-    def __init__(self, id_reference: int, career_: str, ):
+    def __init__(self, id_reference: int, career_: str):
         sqlite3.__init__()
         Student.__init__(self, id_student, name, birthday, nationality, gender, email, register, semester, career)
         self.id_reference = id_reference
@@ -14,7 +14,7 @@ class DataQuery(Student):
 
     # Connect Database
 
-    def connect_data_base(self):
+    def connect_data_base(self) -> None:
         conn = sqlite3.connect('data_student.db')
         return conn
 
@@ -35,7 +35,7 @@ class DataQuery(Student):
 
     # Update function
 
-    def update_student(id_reference):
+    def update_student(id_reference) -> None:
         conn = sqlite3.connect('data_student.db')
         c = conn.cursor()
         try:
@@ -49,7 +49,7 @@ class DataQuery(Student):
             conn.close()
 
     # Delete function
-    def delete_student(career_):
+    def delete_student(career_) -> None:
         conn = sqlite3.connect('data_student.db')
         c = conn.cursor()
         try:
@@ -60,7 +60,7 @@ class DataQuery(Student):
         finally:
             conn.close()
 
-    def insert_student(self):
+    def insert_student(self) -> None:
         conn = sqlite3.connect('data_student.db')
         c = conn.cursor()
         try:

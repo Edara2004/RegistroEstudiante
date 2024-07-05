@@ -1,14 +1,14 @@
 import sqlite3
-from main import Student
-from time_function import time_register
-from dataquery import DataQuery
+from ctr_data.Student import Student
+from admin_data_student.dataquery import DataQuery
 
 # Connect to source
 connect_data = sqlite3.connect('data_student.db')
 
 cursor = connect_data.cursor()
 
-#Create table if no exists
+# Create table if no exists
+
 cursor.execute(""" CREATE TABLE IF NOT EXISTS data_user (
 	id	INTEGER,
 	name	TEXT NOT NULL,
@@ -17,18 +17,15 @@ cursor.execute(""" CREATE TABLE IF NOT EXISTS data_user (
 	gender	TEXT NOT NULL,
 	email	TEXT NOT NULL,
 	register	TEXT,
-	semestre	INTEGER NOT NULL,
+	semester	INTEGER NOT NULL,
 	career	TEXT NOT NULL,
 	time TEXT,
-	PRIMARY KEY("id" AUTOINCREMENT))
+	PRIMARY KEY("id" AUTOINCREMENT),
+	FOREIGN KEY (notes_students) REFERENCES data_user (id))
 """)
-
-#cursor.execute("INSERT INTO data_user VALUES (3, 'Pedro Perez', '2004-11-11', 'Venezolano', 'Hombre', 'pepitoDa@gmail.com', 'Si', '1', 'Sistemas')")
 
 # Insert Data into SQL
 
-# est_1 = Student(7, "Alberto Rodriguez", "2002-11-23", "Peru", "Masculino", "daniel@gmail.com", "Si", 2, "Industrial")
-#
 # cursor.execute("INSERT INTO data_user VALUES (:id, :name, :birthday, :nacionality, :gender, :email, :register, :semester, :career, :time)",{
 #     'id' : est_1.id,
 #     'name' : est_1.name,
@@ -45,7 +42,6 @@ cursor.execute(""" CREATE TABLE IF NOT EXISTS data_user (
 # connect_data.commit()
 
 
-
 # Show data from source
 # cursor.execute("SELECT * FROM data_user")
 # estudiantes = cursor.fetchmany(10)
@@ -53,4 +49,6 @@ cursor.execute(""" CREATE TABLE IF NOT EXISTS data_user (
 
 connect_data.close()
 
-print(DataQuery.insert_student())
+h = Student(3204565, "Marco Ayala", "2002-05-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,"Sistemas")
+
+print(DataQuery.insert_student(h))
