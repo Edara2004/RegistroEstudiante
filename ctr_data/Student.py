@@ -3,7 +3,7 @@ from ctr_data.function_time.time_function import time_register
 
 class Student:
     def __init__(self, id_student: int, name: str, birthday: str, nationality: str, gender: str, email: str,
-                 register: str, semester: int, career: str):
+                 register: str, semester: int, career: str) -> object:
         self.id_student = id_student
         self.name = name
         self.birthday = birthday
@@ -46,5 +46,9 @@ class Student:
         return self.career
 
 
-# Student(3204565, "Marco Ayala", "2002-05-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,"Sistemas")
-# print(a)
+# h2 = Notes(2, 3, 4)
+# print(h2.print_note())
+
+
+# a = Student(3204565, "Marco Ayala", "2002-05-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,"Sistemas")
+# print(a.show_student_data())

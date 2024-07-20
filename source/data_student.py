@@ -49,6 +49,6 @@ cursor.execute(""" CREATE TABLE IF NOT EXISTS data_user (
 
 connect_data.close()
 
-h = Student(3204565, "Marco Ayala", "2002-05-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,"Sistemas")
+#h = Student(3204565, "Marco Ayala", "2002-05-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,"Sistemas")
 
-print(DataQuery.insert_student(h))
+print(DataQuery.get_student(31001145))
