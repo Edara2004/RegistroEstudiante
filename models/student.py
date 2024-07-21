@@ -1,4 +1,4 @@
-from models.time_function.time_function import time_register
+from models.function_time.time_function import time_register
 
 
 class Student:

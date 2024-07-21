@@ -2,13 +2,13 @@ import sqlite3
 from typing import Any
 
 from models.student import Student
-from models.time_function.time_function import time_register
+from models.function_time.time_function import time_register
 
 
 class DataQuery(Student):
     def __init__(self, id_reference: int, career_: str):
         sqlite3.__init__()
-        Student.__init__(self, id_student, name, birthday, nationality, gender, email, register, semester, career)
+        super().__init__(self, id_student, name, birthday, nationality, gender, email, register, semester, career)
         self.id_reference = id_reference
         self.career_ = career_
 

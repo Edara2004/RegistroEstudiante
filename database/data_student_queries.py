@@ -1,5 +1,6 @@
 import sqlite3
 from admin_data_student.db_queries_student import DataQuery
+from models.student import Student
 
 # Connect to database
 connect_data = sqlite3.connect('data_student.db')
@@ -20,11 +21,12 @@ cursor.execute(""" CREATE TABLE IF NOT EXISTS data_user (
 	career	TEXT NOT NULL,
 	time TEXT,
 	PRIMARY KEY("id" AUTOINCREMENT),
-	FOREIGN KEY (notes_students) REFERENCES data_user (id))
+	FOREIGN KEY (id_grade_student) REFERENCES data_user (id))	
 """)
 
 connect_data.close()
 
-# h = Student(3204565, "Marco Ayala", "2002-05-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,"Sistemas")
+h = Student(325, "Marco Ayala", "2002-05-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,
+            "Sistemas")
 
-print(DataQuery.get_student(31001145))
+print(DataQuery.insert_student(h))
