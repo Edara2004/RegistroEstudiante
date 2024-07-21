@@ -60,6 +60,7 @@ class DataQuery(Student):
         finally:
             conn.close()
 
+    # Insert function
     def insert_student(self) -> None:
         conn = sqlite3.connect('data_student.db')
         c = conn.cursor()
@@ -84,5 +85,6 @@ class DataQuery(Student):
         finally:
             conn.close()
 
+    # Close Database function
     def close_database(self, conn):
         conn.close()
