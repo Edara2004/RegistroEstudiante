@@ -1,7 +1,7 @@
 import sqlite3
-from admin_data_student.dataquery import DataQuery
+from admin_data_student.db_queries_student import DataQuery
 
-# Connect to source
+# Connect to database
 connect_data = sqlite3.connect('data_student.db')
 
 cursor = connect_data.cursor()

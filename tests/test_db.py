@@ -1,11 +1,11 @@
 import pytest
-from source.admin_data_student.dataquery import DataQuery
-from source.admin_data_student.time_function import time_register
+from database.admin_data_student.db_queries_student import DataQuery
+from database.admin_data_student.time_function import time_register
 
 
 @pytest.fixture
 def data_queries():
-    db_dir: str = 'source/data_student.db'
+    db_dir: str = 'database/data_student.db'
     db_test = DataQuery(db_dir)
     yield db_test
     db_test.close_database(db_test.connect_data_base())

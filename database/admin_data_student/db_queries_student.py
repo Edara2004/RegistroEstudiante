@@ -1,8 +1,8 @@
 import sqlite3
 from typing import Any
 
-from ctr_data.Student import Student
-from ctr_data.function_time.time_function import time_register
+from models.student import Student
+from models.time_function.time_function import time_register
 
 
 class DataQuery(Student):

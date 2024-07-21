@@ -1,7 +1,7 @@
 import sqlite3
 
-from ctr_data.function_time.time_function import time_register
-from ctr_data.grades_student import Notes
+from models.time_function.time_function import time_register
+from models.grades_student import Notes
 
 
 class NotesQuery(Notes):

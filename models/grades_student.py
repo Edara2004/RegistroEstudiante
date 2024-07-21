@@ -1,5 +1,5 @@
 
-from ctr_data.function_time.time_function import time_register
+from models.time_function.time_function import time_register
 
 
 class Notes:
