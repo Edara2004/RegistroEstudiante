@@ -1,6 +1,6 @@
 import pytest
-from database.admin_data_student.db_queries_student import DataQuery
-from database.admin_data_student.time_function import time_register
+from database.student_queries.db_queries_student import DataQuery
+from database.student_queries.time_function import time_register
 
 
 @pytest.fixture

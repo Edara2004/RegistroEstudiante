@@ -1,5 +1,5 @@
 import sqlite3
-from admin_data_student.db_queries_student import DataQuery
+from database.student_DB.db_queries_student import StudentQuery
 from models.student import Student
 
 # Connect to database
@@ -29,4 +29,4 @@ connect_data.close()
 # h = Student(325, "Marco Ayala", "2002-05-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,
 #            "Sistemas")
 
-print(DataQuery.get_student(325))
+print(StudentQuery.get_student(325))

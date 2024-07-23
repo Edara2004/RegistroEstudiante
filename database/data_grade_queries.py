@@ -1,9 +1,10 @@
 import sqlite3
-from database.user_data.db_queries_grade import GradeQueries
-from models.grades_student import GradeStudent
+from database.grades_DB.db_queries_grade import GradeQueries
 
 # Connect to database
 connect_data = sqlite3.connect('data_student.db')
+
+# cursor
 
 cursor = connect_data.cursor()
 

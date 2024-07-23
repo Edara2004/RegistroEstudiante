@@ -5,7 +5,7 @@ from models.student import Student
 from models.function_time.time_function import time_register
 
 
-class DataQuery(Student):
+class StudentQuery(Student):
     def __init__(self, id_reference: int, career_: str):
         sqlite3.__init__()
         super().__init__(self, id_student, name, birthday, nationality, gender, email, register, semester, career)

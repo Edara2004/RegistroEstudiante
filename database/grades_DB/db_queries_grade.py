@@ -61,6 +61,7 @@ class GradeQueries(GradeStudent):
         finally:
             conn.close()
 
+    # Delete grades
     def delete_student(career_) -> None:
         conn = sqlite3.connect('data_student.db')
         c = conn.cursor()
