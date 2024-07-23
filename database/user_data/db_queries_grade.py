@@ -31,9 +31,9 @@ class GradeQueries(GradeStudent):
         c = conn.cursor()
         try:
             c.execute(
-                "INSERT INTO grades_student VALUES (:id, :mathematics, :physics, :english, :chemistry ,:time)",
+                "INSERT INTO grades_student VALUES (:id_grade_student, :mathematics, :physics, :english, :chemistry ,:time)",
                 {
-                    'id': self.id_student_notes,
+                    'id_grade_student': self.id_student_notes,
                     'mathematics': self.mathematics,
                     'physics': self.physics,
                     'english': self.english,
@@ -53,8 +53,20 @@ class GradeQueries(GradeStudent):
         try:
             column_data = input("Write the column you use: ")  # input
             data_updating = input("Write the data you wanna change: ")  # input
-            c.execute(f"UPDATE grades_student SET '{column_data}' = '{data_updating}' WHERE id= ?",
+            c.execute(f"UPDATE grades_student SET '{column_data}' = '{data_updating}' WHERE id_grade_student= ?",
                       (id_grade_reference,))
+            conn.commit()
+        except sqlite3.Error as e:
+            print(e)
+        finally:
+            conn.close()
+
+    def delete_student(career_) -> None:
+        conn = sqlite3.connect('data_student.db')
+        c = conn.cursor()
+        grade_delete_data = input("¿Decide donde deseas eliminar?")
+        try:
+            c.execute(f"DELETE FROM grades_student WHERE {grade_delete_data} = ?", (career_,))
             conn.commit()
         except sqlite3.Error as e:
             print(e)
