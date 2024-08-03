@@ -2,16 +2,17 @@ from models.function_time.time_function import time_register
 
 
 class GradeStudent:
-    def __init__(self, id_grade_student: int, mathematics: int, physics: int, english: int, chemistry: int):
-        self.id_student_notes = id_grade_student
+    def __init__(self, id_grade_student: int, mathematics: int, physics: int, english: int, chemistry: int, semester: int):
+        self.id_grade_student = id_grade_student
         self.mathematics = mathematics
         self.physics = physics
         self.english = english
         self.chemistry = chemistry
+        self.semester = semester
         self.time_check = time_register()
 
     def print_note(self):
-        return f'name , {self.id_student_notes} {self.english}, {self.physics}, {self.mathematics}, {self.time_check}'
+        return f'name , {self.id_grade_student} {self.english}, {self.physics}, {self.mathematics}, {self.time_check}'
 
 
 # h2 = GradeStudent(31001145, 3, 4, 4, 3)  # Tests

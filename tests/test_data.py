@@ -1,9 +1,10 @@
 import pytest
 from models.admin_user import AdminUser
+from db.grades_DB.grade_db import GradeQueries
 
 # @pytest.fixture
 # def data_queries():
-#     db_dir: str = 'database/data_student.db'
+#     db_dir: str = 'db/data_student.db'
 #     db_test = DataQuery(db_dir)
 #     yield db_test
 #     db_test.close_database(db_test.connect_data_base())
@@ -44,6 +45,14 @@ from models.admin_user import AdminUser
 
 h = AdminUser("Dada", "dada")
 
+
+
+
 def test_data():
     po = AdminUser.shw_ldts(h)
     assert po == "Dada dada"
+
+def test_grade_get_function():
+    d = GradeQueries.get_notes(32)
+    print(d)
+    assert d == (32, 16, 15, 10, 11, 1, '2024-07-27 17:34:33')

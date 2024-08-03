@@ -1,8 +1,9 @@
 import sqlite3
-from database.student_DB.db_queries_student import StudentQuery
+from db.student_DB.student_db import StudentQuery
 from models.student import Student
 
-# Connect to database
+
+# Connect to db
 connect_data = sqlite3.connect('data_student.db')
 
 cursor = connect_data.cursor()
@@ -20,13 +21,12 @@ cursor.execute(""" CREATE TABLE IF NOT EXISTS data_user (
 	semester	INTEGER NOT NULL,
 	career	TEXT NOT NULL,
 	time TEXT,
-	PRIMARY KEY("id" AUTOINCREMENT),
-	FOREIGN KEY (id_grade_student) REFERENCES data_user (id))	
+	PRIMARY KEY("id" AUTOINCREMENT))	
 """)
 
 connect_data.close()
 
 # h = Student(325, "Marco Ayala", "2002-05-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,
-#            "Sistemas")
+#             "Sistemas")
 
 print(StudentQuery.get_student(325))

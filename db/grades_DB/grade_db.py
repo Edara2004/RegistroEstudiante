@@ -6,13 +6,13 @@ from models.grades_student import GradeStudent
 
 class GradeQueries(GradeStudent):
     def __init__(self, id_grade_reference: int, id_grade_student: int, mathematics: int, physics: int, english: int,
-                 chemistry: int):
+                 chemistry: int, semester: int):
         sqlite3.__init__()
-        super().__init__(id_grade_student, mathematics, physics, english, chemistry)
+        super().__init__(id_grade_student, mathematics, physics, english, chemistry, semester)
         self.id_grade_reference = id_grade_reference
 
     # Get grades
-    def get_notes(id_grade_reference):
+    def get_notes(id_grade_reference) -> list:
         conn = sqlite3.connect('data_student.db')
         c = conn.cursor()
         try:
@@ -31,13 +31,14 @@ class GradeQueries(GradeStudent):
         c = conn.cursor()
         try:
             c.execute(
-                "INSERT INTO grades_student VALUES (:id_grade_student, :mathematics, :physics, :english, :chemistry ,:time)",
+                "INSERT INTO grades_student VALUES (:id_grade_student, :mathematics, :physics, :english, :chemistry , :semester,:time)",
                 {
-                    'id_grade_student': self.id_student_notes,
+                    'id_grade_student': self.id_grade_student,
                     'mathematics': self.mathematics,
                     'physics': self.physics,
                     'english': self.english,
                     'chemistry': self.chemistry,
+                    'semester': self.semester,
                     'time': time_register()})
             conn.commit()
         except sqlite3.Error as e:

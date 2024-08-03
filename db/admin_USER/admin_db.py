@@ -1,6 +1,6 @@
 import sqlite3
 from admin_DB.db_admin import CsControl
-from models.admin_user import AdminUser
+
 
 # Connect db
 connect_db = sqlite3.connect('admin_data.db')

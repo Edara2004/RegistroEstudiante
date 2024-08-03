@@ -6,22 +6,24 @@ from models.function_time.time_function import time_register
 
 
 class StudentQuery(Student):
-    def __init__(self, id_reference: int, career_: str):
+    def __init__(self, id_reference: int, career_: str, db_dir: str):
         sqlite3.__init__()
         super().__init__(self, id_student, name, birthday, nationality, gender, email, register, semester, career)
         self.id_reference = id_reference
         self.career_ = career_
+        self.db_dir = db_dir
 
     # Connect Database
 
     def connect_data_base(self) -> None:
-        conn = sqlite3.connect('data_student.db')
-        return conn
+        conn = sqlite3.connect("data_student.db")
+        cursor = conn.cursor()
+        return conn, cursor
 
     # Get Function
 
     def get_student(id_reference) -> Any | None:
-        conn = sqlite3.connect('data_student.db')
+        conn = sqlite3.connect("data_student.db")
         c = conn.cursor()
         try:
             c.execute("SELECT * FROM data_user WHERE id=?", (id_reference,))
