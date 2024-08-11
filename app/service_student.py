@@ -51,8 +51,23 @@ class StudentService:
             return False
 
     def get_student(self) -> List[Student]:
-        student: Student = None
+        students: Student = None
         with Session(self.engine) as session:
-            student = session.query(Student).all()
-        return student
+            students = session.query(Student).all()
+        return students
 
+    def delete_student(self, id_student_g):
+        with Session(self.engine) as session:
+            student = session.query(Student).filter_by(id=id_student_g).first()
+            if student:
+                try:
+                    session.delete(student)
+                    session.commit()
+                    print(f'El estudiante con la ID {id_student_g} fue eliminado correctamente.')
+
+                except IntegrityError as e:
+                    session.rollback()
+                    print(f'No se pudo eliminar el estudiante con la ID {id_student_g}, Error {e}.')
+
+                else:
+                    print(f'No existe estudiante con la ID {id_student_g}')
