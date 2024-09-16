@@ -16,14 +16,14 @@ class StudentQuery(Student):
     # Connect Database
 
     def connect_data_base(self) -> None:
-        conn = sqlite3.connect("data_student.db")
+        conn = sqlite3.connect("..//data_student.db")
         cursor = conn.cursor()
         return conn, cursor
 
     # Get Function
 
     def get_student(id_reference) -> Any | None:
-        conn = sqlite3.connect("data_student.db")
+        conn = sqlite3.connect("..//data_student.db")
         c = conn.cursor()
         try:
             c.execute("SELECT * FROM data_user WHERE id=?", (id_reference,))
@@ -38,7 +38,7 @@ class StudentQuery(Student):
     # Update function
 
     def update_student(id_reference) -> None:
-        conn = sqlite3.connect('data_student.db')
+        conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:
             column_data = input("Write the column you use: ")  # input
@@ -52,7 +52,7 @@ class StudentQuery(Student):
 
     # Delete function
     def delete_student(career_) -> None:
-        conn = sqlite3.connect('data_student.db')
+        conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:
             c.execute("DELETE FROM data_user WHERE career = ?", (career_,))
@@ -64,7 +64,7 @@ class StudentQuery(Student):
 
     # Insert function
     def insert_student(self) -> None:
-        conn = sqlite3.connect('data_student.db')
+        conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:
             c.execute(

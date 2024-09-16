@@ -1,10 +1,8 @@
-from models.function_time.time_function import time_register
-
 
 class Student:
-    def __init__(self, id_student: int, name: str, birthday: str, nationality: str, gender: str, email: str,
+    def __init__(self, id_student_m: int, name: str, birthday: str, nationality: str, gender: str, email: str,
                  register: str, semester: int, career: str) -> object:
-        self.id_student = id_student
+        self.id_student = id_student_m
         self.name = name
         self.birthday = birthday
         self.nationality = nationality
@@ -13,13 +11,12 @@ class Student:
         self.register = register
         self.semester = semester
         self.career = career
-        self.time_check = time_register()
 
     def show_student_data(self):
-        return f'Data, {self.id_student}, {self.name}, {self.birthday}, {self.nationality}, {self.gender}, {self.email}, {self.register}, {self.semester}, {self.career}'
+        return f'Data, {self.id_student_m}, {self.name}, {self.birthday}, {self.nationality}, {self.gender}, {self.email}, {self.register}, {self.semester}, {self.career}'
 
-    def id_student(self):
-        return self.id_student
+    def id_student_m(self):
+        return self.id_student_m
 
     def name(self):
         return self.name

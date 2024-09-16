@@ -27,11 +27,11 @@ class GradeQueries(GradeStudent):
 
     # Insert grades
     def insert_notes(self):
-        conn = sqlite3.connect('data_student.db')
+        conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:
             c.execute(
-                "INSERT INTO grades_student VALUES (:id_grade_student, :mathematics, :physics, :english, :chemistry , :semester,:time)",
+                "INSERT INTO grades_student VALUES (:id_grade_student, :mathematics, :physics, :english, :chemistry , :semester, :time)",
                 {
                     'id_grade_student': self.id_grade_student,
                     'mathematics': self.mathematics,
@@ -49,7 +49,7 @@ class GradeQueries(GradeStudent):
 
     # Update grades
     def update_grade(id_grade_reference) -> None:
-        conn = sqlite3.connect('data_student.db')
+        conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:
             column_data = input("Write the column you use: ")  # input
@@ -64,7 +64,7 @@ class GradeQueries(GradeStudent):
 
     # Delete grades
     def delete_student(career_) -> None:
-        conn = sqlite3.connect('data_student.db')
+        conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         grade_delete_data = input("¿Decide donde deseas eliminar?")
         try:
