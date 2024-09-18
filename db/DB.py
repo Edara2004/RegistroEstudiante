@@ -48,10 +48,10 @@ cursor.executescript(sql_statements)
 connect_data.close()
 
 # h = Student(327, "Marco Ayala", "2002-06-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,
-#            "Sistemas")
+#           "Sistemas")
 
 # print(StudentQuery.insert_student(h))
 
-d = GradeStudent(345, 12, 23, 12, 12, 5)
+# d = GradeStudent(345, 12, 23, 12, 12, 5)
 
-print(GradeQueries.insert_notes(d))
+print(StudentQuery.insert_student(False))

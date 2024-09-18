@@ -66,7 +66,7 @@ class GradeQueries(GradeStudent):
     def delete_student(career_) -> None:
         conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
-        grade_delete_data = input("¿Decide donde deseas eliminar?")
+        grade_delete_data = input("¿Decide donde deseas eliminar?") # Input
         try:
             c.execute(f"DELETE FROM grades_student WHERE {grade_delete_data} = ?", (career_,))
             conn.commit()
