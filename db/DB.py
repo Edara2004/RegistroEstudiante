@@ -1,6 +1,7 @@
 import sqlite3
 from db.student_db import StudentQuery
 from db.grade_db import GradeQueries
+from db.db_admin import AdminUser, CsControl
 from models.grades_student import GradeStudent
 from models.student import Student
 
@@ -40,6 +41,7 @@ id_user INTEGER,
 username TEXT NOT NULL,
 password TEXT NOT NULL,
 PRIMARY KEY("id_user" AUTOINCREMENT),
+PRIMARY KEY("username"),
 FOREIGN KEY (id_user) REFERENCES data_user (id)) 
 """
 
@@ -54,4 +56,6 @@ connect_data.close()
 
 # d = GradeStudent(345, 12, 23, 12, 12, 5)
 
-print(StudentQuery.insert_student(False))
+h = AdminUser(136, 'Pepe', 'gana')
+
+print(CsControl.insert_new_user(h))

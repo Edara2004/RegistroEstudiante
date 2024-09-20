@@ -13,7 +13,7 @@ class GradeQueries(GradeStudent):
 
     # Get grades
     def get_notes(id_grade_reference) -> list:
-        conn = sqlite3.connect('data_student.db')
+        conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:
             c.execute("SELECT * FROM grades_student WHERE id_grade_student=?", (id_grade_reference,))

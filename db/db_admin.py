@@ -3,8 +3,8 @@ import sqlite3
 
 
 class CsControl(AdminUser):
-    def __init__(self, username: str, password: str):
-        AdminUser.__init__(self, username, password)
+    def __init__(self, id_user: int, username: str, password: str):
+        AdminUser.__init__(self, id_user, username, password)
 
     def insert_new_user(self):
         conn = sqlite3.connect('..//data_student.db')
@@ -47,3 +47,12 @@ class CsControl(AdminUser):
             print(e)
         finally:
             conn.close()
+
+    def pass_user(self):
+
+        username = self.username
+        password = self.password_encrypt()
+
+        conn = sqlite3.connect('..//data_student.db')
+        c = conn.cursor()
+        statement = f"SELECT username from UserDB WHERE username = '{username}', AND password = '{password}'"
