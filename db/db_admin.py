@@ -1,4 +1,5 @@
 from models.admin_user import AdminUser
+import bcrypt
 import sqlite3
 
 
@@ -50,9 +51,10 @@ class CsControl(AdminUser):
 
     def pass_user(self):
 
-        username = self.username
-        password = self.password_encrypt()
-
-        conn = sqlite3.connect('..//data_student.db')
-        c = conn.cursor()
-        statement = f"SELECT username from UserDB WHERE username = '{username}', AND password = '{password}'"
+        get_password = self.get_password_encrypt()
+        password = self.password
+        vrf = bytes(password, 'utf-8')
+        if bcrypt.checkpw(vrf, get_password):
+            print('Si')
+        else:
+            print('No, lee que hiciste')

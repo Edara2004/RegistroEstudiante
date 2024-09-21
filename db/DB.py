@@ -58,4 +58,4 @@ connect_data.close()
 
 h = AdminUser(136, 'Pepe', 'gana')
 
-print(CsControl.insert_new_user(h))
+print(CsControl.pass_user(h))

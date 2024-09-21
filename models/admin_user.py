@@ -1,4 +1,5 @@
 import bcrypt
+import sqlite3
 
 
 class AdminUser():
@@ -24,6 +25,23 @@ class AdminUser():
 
         return encrypt
 
+    def get_password_encrypt(self):
 
-# r = AdminUser("Pepito", "1234")
-# print(AdminUser.password_encrypt(r))
+        username = self.username
+
+        conn = sqlite3.connect('..//data_student.db')
+        c = conn.cursor()
+        try:
+            c.execute("SELECT password from UserDB WHERE username =?", (username,))
+            data_ = c.fetchone()
+            pwd = data_[0]
+            return pwd
+        except sqlite3.Error as e:
+            print(e)
+            return None
+        finally:
+            conn.close()
+
+
+# r = AdminUser(129, 'Pepa', 'papa')
+# print(AdminUser.get_password_encrypt(r))
