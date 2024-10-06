@@ -55,6 +55,6 @@ class CsControl(AdminUser):
         password = self.password
         vrf = bytes(password, 'utf-8')
         if bcrypt.checkpw(vrf, get_password):
-            print('Si')
+            return True
         else:
-            print('No, lee que hiciste')
+            return False
