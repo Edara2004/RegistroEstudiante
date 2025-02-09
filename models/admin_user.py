@@ -2,7 +2,7 @@ import bcrypt
 import sqlite3
 
 
-class AdminUser():
+class AdminUser:
     def __init__(self, id_user: int, username: str, password: str):
         self.id_user = id_user
         self.username = username
@@ -43,5 +43,5 @@ class AdminUser():
             conn.close()
 
 
-# r = AdminUser(129, 'Pepa', 'papa')
-# print(AdminUser.get_password_encrypt(r))
+#d = AdminUser(129, 'Pepa', 'papda')
+#print(AdminUser.password_encrypt(d))

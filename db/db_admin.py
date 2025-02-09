@@ -16,7 +16,9 @@ class CsControl(AdminUser):
                 {
                     'id_user': self.id_user,
                     'username': self.username,
-                    'password': self.password_encrypt()})
+                    'password': self.password_encrypt()
+                }
+            )
             conn.commit()
         except sqlite3.Error as e:
             print(e)
@@ -24,7 +26,7 @@ class CsControl(AdminUser):
         finally:
             conn.close()
 
-    def update_user(username) -> None:
+    def update_user(username):
         conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:
@@ -37,7 +39,7 @@ class CsControl(AdminUser):
         finally:
             conn.close()
 
-    def delete_user(username) -> None:
+    def delete_user(username):
         conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         user_delete_data = input("¿Decide donde deseas eliminar?")
@@ -58,3 +60,7 @@ class CsControl(AdminUser):
             return True
         else:
             return False
+
+
+d = AdminUser(130, 'Pepa', 'passpda')
+print(CsControl.insert_new_user(d))

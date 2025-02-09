@@ -15,14 +15,14 @@ class StudentQuery(Student):
 
     # Connect Database
 
-    def connect_data_base(self) -> None:
+    def connect_data_base(self):
         conn = sqlite3.connect("..//data_student.db")
         cursor = conn.cursor()
         return conn, cursor
 
     # Get Function
 
-    def get_student(id_reference) -> Any | None:
+    def get_student(id_reference):
         conn = sqlite3.connect("..//data_student.db")
         c = conn.cursor()
         try:
@@ -37,7 +37,7 @@ class StudentQuery(Student):
 
     # Update function
 
-    def update_student(id_reference) -> None:
+    def update_student(id_reference):
         conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:
@@ -51,7 +51,7 @@ class StudentQuery(Student):
             conn.close()
 
     # Delete function
-    def delete_student(career_) -> None:
+    def delete_student(career_):
         conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:
@@ -63,7 +63,7 @@ class StudentQuery(Student):
             conn.close()
 
     # Insert function
-    def insert_student(self) -> None:
+    def insert_student(self):
         conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:

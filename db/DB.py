@@ -6,7 +6,7 @@ from models.grades_student import GradeStudent
 from models.student import Student
 
 # Connect to db
-connect_data = sqlite3.connect('..//data_student.db')
+connect_data = sqlite3.connect('../data_student.db')
 
 cursor = connect_data.cursor()
 
@@ -41,7 +41,6 @@ id_user INTEGER,
 username TEXT NOT NULL,
 password TEXT NOT NULL,
 PRIMARY KEY("id_user" AUTOINCREMENT),
-PRIMARY KEY("username"),
 FOREIGN KEY (id_user) REFERENCES data_user (id)) 
 """
 
@@ -56,6 +55,6 @@ connect_data.close()
 
 # d = GradeStudent(345, 12, 23, 12, 12, 5)
 
-h = AdminUser(136, 'Pepe', 'gana')
+# h = AdminUser(136, 'Pepe', 'gana')
 
-print(CsControl.pass_user(h))
+# print(CsControl.pass_user(h))

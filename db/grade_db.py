@@ -48,7 +48,7 @@ class GradeQueries(GradeStudent):
             conn.close()
 
     # Update grades
-    def update_grade(id_grade_reference) -> None:
+    def update_grade(id_grade_reference):
         conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         try:
@@ -63,7 +63,7 @@ class GradeQueries(GradeStudent):
             conn.close()
 
     # Delete grades
-    def delete_student(career_) -> None:
+    def delete_student(career_):
         conn = sqlite3.connect('..//data_student.db')
         c = conn.cursor()
         grade_delete_data = input("¿Decide donde deseas eliminar?") # Input
