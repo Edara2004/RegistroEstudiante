@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk, LabelFrame, Checkbutton
+from tkinter import ttk, LabelFrame, Checkbutton, Frame, messagebox
 
 
 class App(tk.Tk):
@@ -48,26 +48,44 @@ class LoginUser(tk.LabelFrame):
 
         # Title
         login_label = ttk.Label(frame_login, text="INGRESA AL SISTEMA", font=("Roboto", "12", "bold"))
-        login_label.grid_configure(row=0, column=0, columnspan=2)
+        login_label.grid_configure(row=0, column=0, columnspan=3, pady=10)
 
         # User Widget
         username_label = ttk.Label(frame_login, text="Usuario")
         username_label.grid_configure(row=1, column=0, pady=10, padx=20)
         username_entry = ttk.Entry(frame_login)
         username_entry.grid_configure(row=1, column=1)
+        
+        # Show hide password
+        def show_hide_password():
+            if password_entry['show'] == '*':
+                password_entry['show'] = ''
+            else:
+                password_entry['show'] = '*'
 
         # Password Widget
         password_label = ttk.Label(frame_login, text="Contraseña")
         password_label.grid_configure(row=2, column=0)
-        password_entry = ttk.Entry(frame_login, show="******")
+        password_entry = ttk.Entry(frame_login, show="*")
         password_entry.grid_configure(row=2, column=1)
+        register_show_password = Checkbutton(frame_login, text="Mostrar", font=("Roboto", "10"),
+                                             command=show_hide_password)
+        register_show_password.grid_configure(row=2, column=2)
+
+        # Show receive message
+        def register_message_info():
+            text_message_register = messagebox.showinfo(title="Pasos para el registro de usuario",
+                                                        message="1. Rellenar todo el formulario\n"
+                                                                "2. Deben coincidir las contraseñas\n"
+                                                                "3. Colocar la clave admin de manera obligatoria")
+            return text_message_register
 
         # Buttom Enter & Register
         buttom_label_enter_login = ttk.Button(frame_login, text="Entrar")
-        buttom_label_enter_login.grid_configure(row=3, column=0, padx=15, pady=15)
+        buttom_label_enter_login.grid_configure(row=3, column=0, columnspan=2, padx=1, pady=15)
         buttom_label_register_login = ttk.Button(frame_login, text="Registar",
-                                                 command=lambda: controller.show_frame(RegisterUser))
-        buttom_label_register_login.grid_configure(row=3, column=1, padx=15, pady=15)
+                                                 command=lambda: register_message_info() and controller.show_frame(RegisterUser))
+        buttom_label_register_login.grid_configure(row=3, column=1, columnspan=2, padx=1, pady=15)
 
         frame_login.pack(expand=True)
 
@@ -93,25 +111,14 @@ class RegisterUser(tk.LabelFrame):
         register_entry_user.grid_configure(row=1, column=1)
 
         # Password widget
-
-        def show_hide_password():
-            if register_entry_password and register_entry_password_2['show'] == '*':
-                register_entry_password['show'] = ''
-                register_entry_password_2['show'] = ''
-            else:
-                register_entry_password['show'] = '*'
-                register_entry_password_2['show'] = '*'
-
         register_label_password = ttk.Label(frame_register, text="Escribir Contraseña", font=("Roboto", "10"))
         register_label_password.grid_configure(row=2, column=0, padx=5, pady=3)
-        register_entry_password = ttk.Entry(frame_register, show="*")
-        register_entry_password.grid_configure(row=2, column=1, padx=5, pady=3)
+        password_entry = ttk.Entry(frame_register, show="*")
+        password_entry.grid_configure(row=2, column=1, padx=5, pady=3)
         register_label_password_2 = ttk.Label(frame_register, text="Confirmar Contraseña", font=("Roboto", "10"))
         register_label_password_2.grid_configure(row=3, column=0, padx=5, pady=3)
-        register_entry_password_2 = ttk.Entry(frame_register, show="*")
-        register_entry_password_2.grid_configure(row=3, column=1, padx=5, pady=3)
-        register_show_password = Checkbutton(frame_register, text="Mostrar", font=("Roboto", "10"), command=show_hide_password)
-        register_show_password.grid_configure(row=2, column=2, rowspan=2)
+        password_entry_2 = ttk.Entry(frame_register, show="*")
+        password_entry_2.grid_configure(row=3, column=1, padx=5, pady=3)
 
         # Admin Password
         register_label_admin_password = ttk.Label(frame_register, text="Contraseña Admin", font=("Roboto", "10"))
