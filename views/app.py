@@ -1,10 +1,10 @@
 import tkinter as tk
-from tkinter import ttk, LabelFrame, Checkbutton, Frame, messagebox
+from tkinter import ttk, LabelFrame, Checkbutton, messagebox
 
 
-class App(tk.Tk):
+class AppLogin(tk.Tk):
     def __init__(self, *args, **kwargs):
-        # __init__ function for class App
+        # __init__ function for class AppLogin
         tk.Tk.__init__(self, *args, **kwargs)
         self.title("C.I.E by Eduar Rodriguez")
         self.geometry("1366x768")
@@ -129,6 +129,7 @@ class RegisterUser(tk.LabelFrame):
         # Buttom register & Cancel
         register_buttom_users = ttk.Button(frame_register, text="Registrar")
         register_buttom_users.grid_configure(row=5, column=0, padx=3, pady=10)
+
         register_buttom_cancel = ttk.Button(frame_register, text="Cancelar",
                                             command=lambda: controller.show_frame(LoginUser))
         register_buttom_cancel.grid_configure(row=5, column=1, padx=3, pady=10)
@@ -136,7 +137,7 @@ class RegisterUser(tk.LabelFrame):
         frame_register.pack(expand=True)
 
 
-root = App()
+root = AppLogin()
 root.resizable(True, True)
 
 # Run Mainloop
