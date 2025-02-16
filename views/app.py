@@ -4,7 +4,6 @@ from tkinter import ttk, LabelFrame, Checkbutton, messagebox
 
 class AppLogin(tk.Tk):
     def __init__(self, *args, **kwargs):
-
         # __init__ function for class AppLogin
         tk.Tk.__init__(self, *args, **kwargs)
         self.title("C.I.E by Eduar Rodriguez")
@@ -84,7 +83,6 @@ class LoginUser(tk.LabelFrame):
                                                         message="1. Rellenar todo el formulario\n"
                                                                 "2. Deben coincidir las contraseñas\n"
                                                                 "3. Colocar la clave admin de manera obligatoria")
-            return text_message_register
 
         # button Enter & Register
         button_label_enter_login = ttk.Button(frame_login, text="Entrar")
@@ -109,6 +107,21 @@ class RegisterUser(tk.LabelFrame):
             password_entry.delete(0, "")
             password_entry_2.delete(0, "")
             register_admin_password_entry.delete(0, "")
+
+        def check_box():
+
+            # Entries List
+            var = [register_id_entry_user.get(),
+                   register_entry_user.get(),
+                   password_entry.get(),
+                   password_entry_2.get(),
+                   register_admin_password_entry.get()]
+
+            for var in var:
+                if var != '':
+                    True
+                else:
+                    return messagebox.showerror(title="Error", message="Ninguna casilla debe estar vacía.")
 
         # Setup frame
         frame_register = LabelFrame(self)
@@ -135,7 +148,7 @@ class RegisterUser(tk.LabelFrame):
         # Password widget
         register_label_password = ttk.Label(frame_register, text="Escribir Contraseña", font=("Roboto", "10"))
         register_label_password.grid_configure(row=3, column=0, padx=5, pady=3)
-        password_entry = ttk.Entry(frame_register, show="*")
+        password_entry = ttk.Entry(frame_register, show="*", textvariable='')
         password_entry.grid_configure(row=3, column=1, padx=5, pady=3)
         register_label_password_2 = ttk.Label(frame_register, text="Confirmar Contraseña", font=("Roboto", "10"))
         register_label_password_2.grid_configure(row=4, column=0, padx=5, pady=3)
@@ -150,7 +163,7 @@ class RegisterUser(tk.LabelFrame):
         register_admin_password_entry.delete(0, "")
 
         # Button register & Cancel
-        register_button_users = ttk.Button(frame_register, text="Registrar")
+        register_button_users = ttk.Button(frame_register, text="Registrar", command=check_box)
         register_button_users.grid_configure(row=6, column=0, padx=3, pady=10)
 
         register_button_cancel = ttk.Button(frame_register, text="Cancelar",
