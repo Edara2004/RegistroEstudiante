@@ -4,6 +4,7 @@ from tkinter import ttk, LabelFrame, Checkbutton, messagebox
 
 class AppLogin(tk.Tk):
     def __init__(self, *args, **kwargs):
+
         # __init__ function for class AppLogin
         tk.Tk.__init__(self, *args, **kwargs)
         self.title("C.I.E by Eduar Rodriguez")
@@ -40,6 +41,11 @@ class LoginUser(tk.LabelFrame):
     def __init__(self, parent, controller):
         tk.LabelFrame.__init__(self, parent)
 
+        # Clear Entries
+        def clear_box():
+            username_entry.delete(0, "")
+            password_entry.delete(0, "")
+
         # Login frame
         frame_login = LabelFrame(self)
         frame_login.grid_rowconfigure(0, weight=1)
@@ -55,7 +61,7 @@ class LoginUser(tk.LabelFrame):
         username_label.grid_configure(row=1, column=0, pady=10, padx=20)
         username_entry = ttk.Entry(frame_login)
         username_entry.grid_configure(row=1, column=1)
-        
+
         # Show hide password
         def show_hide_password():
             if password_entry['show'] == '*':
@@ -80,19 +86,29 @@ class LoginUser(tk.LabelFrame):
                                                                 "3. Colocar la clave admin de manera obligatoria")
             return text_message_register
 
-        # Buttom Enter & Register
-        buttom_label_enter_login = ttk.Button(frame_login, text="Entrar")
-        buttom_label_enter_login.grid_configure(row=3, column=0, columnspan=2, padx=1, pady=15)
-        buttom_label_register_login = ttk.Button(frame_login, text="Registar",
-                                                 command=lambda: register_message_info() and controller.show_frame(RegisterUser))
-        buttom_label_register_login.grid_configure(row=3, column=1, columnspan=2, padx=1, pady=15)
+        # button Enter & Register
+        button_label_enter_login = ttk.Button(frame_login, text="Entrar")
+        button_label_enter_login.grid_configure(row=3, column=0, columnspan=2, padx=1, pady=15)
+        button_label_register_login = ttk.Button(frame_login, text="Registar",
+                                                 command=lambda: (register_message_info(),
+                                                                  controller.show_frame(RegisterUser), clear_box()))
+        button_label_register_login.grid_configure(row=3, column=1, columnspan=2, padx=1, pady=15)
 
         frame_login.pack(expand=True)
 
 
 class RegisterUser(tk.LabelFrame):
+
     def __init__(self, parent, controller):
         tk.LabelFrame.__init__(self, parent)
+
+        # Clear Entries
+        def clear_box():
+            register_id_entry_user.delete(0, "")
+            register_entry_user.delete(0, "")
+            password_entry.delete(0, "")
+            password_entry_2.delete(0, "")
+            register_admin_password_entry.delete(0, "")
 
         # Setup frame
         frame_register = LabelFrame(self)
@@ -104,35 +120,42 @@ class RegisterUser(tk.LabelFrame):
         register_label = ttk.Label(frame_register, text="Registro de usuario", font=("Roboto", "14", "bold"))
         register_label.grid_configure(row=0, column=0, columnspan=3, pady=20)
 
+        # ID widget
+        register_id_user = ttk.Label(frame_register, text="Escribir ID", font=("Roboto", "10"))
+        register_id_user.grid_configure(row=1, column=0, pady=5)
+        register_id_entry_user = ttk.Entry(frame_register)
+        register_id_entry_user.grid_configure(row=1, column=1, pady=5)
+
         # User widget
         register_label_user = ttk.Label(frame_register, text="Escribir Usuario", font=("Roboto", "10"))
-        register_label_user.grid_configure(row=1, column=0)
+        register_label_user.grid_configure(row=2, column=0)
         register_entry_user = ttk.Entry(frame_register)
-        register_entry_user.grid_configure(row=1, column=1)
+        register_entry_user.grid_configure(row=2, column=1)
 
         # Password widget
         register_label_password = ttk.Label(frame_register, text="Escribir Contraseña", font=("Roboto", "10"))
-        register_label_password.grid_configure(row=2, column=0, padx=5, pady=3)
+        register_label_password.grid_configure(row=3, column=0, padx=5, pady=3)
         password_entry = ttk.Entry(frame_register, show="*")
-        password_entry.grid_configure(row=2, column=1, padx=5, pady=3)
+        password_entry.grid_configure(row=3, column=1, padx=5, pady=3)
         register_label_password_2 = ttk.Label(frame_register, text="Confirmar Contraseña", font=("Roboto", "10"))
-        register_label_password_2.grid_configure(row=3, column=0, padx=5, pady=3)
+        register_label_password_2.grid_configure(row=4, column=0, padx=5, pady=3)
         password_entry_2 = ttk.Entry(frame_register, show="*")
-        password_entry_2.grid_configure(row=3, column=1, padx=5, pady=3)
+        password_entry_2.grid_configure(row=4, column=1, padx=5, pady=3)
 
         # Admin Password
         register_label_admin_password = ttk.Label(frame_register, text="Contraseña Admin", font=("Roboto", "10"))
-        register_label_admin_password.grid_configure(row=4, column=0, padx=5, pady=3)
-        register_admin_password_entry = ttk.Entry(frame_register)
-        register_admin_password_entry.grid_configure(row=4, column=1, padx=5, pady=3)
+        register_label_admin_password.grid_configure(row=5, column=0, padx=5, pady=3)
+        register_admin_password_entry = ttk.Entry(frame_register, show="*")
+        register_admin_password_entry.grid_configure(row=5, column=1, padx=5, pady=3)
+        register_admin_password_entry.delete(0, "")
 
-        # Buttom register & Cancel
-        register_buttom_users = ttk.Button(frame_register, text="Registrar")
-        register_buttom_users.grid_configure(row=5, column=0, padx=3, pady=10)
+        # Button register & Cancel
+        register_button_users = ttk.Button(frame_register, text="Registrar")
+        register_button_users.grid_configure(row=6, column=0, padx=3, pady=10)
 
-        register_buttom_cancel = ttk.Button(frame_register, text="Cancelar",
-                                            command=lambda: controller.show_frame(LoginUser))
-        register_buttom_cancel.grid_configure(row=5, column=1, padx=3, pady=10)
+        register_button_cancel = ttk.Button(frame_register, text="Cancelar",
+                                            command=lambda: (controller.show_frame(LoginUser), clear_box()))
+        register_button_cancel.grid_configure(row=6, column=1, padx=3, pady=10)
 
         frame_register.pack(expand=True)
 
