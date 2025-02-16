@@ -51,8 +51,7 @@ connect_data.close()
 
 
 class CsControl(AdminUser):
-
-    def __init__(self, id_user: int, username: str, password: str):
+    def __init__(self, id_user, username, password):
         AdminUser.__init__(self, id_user, username, password)
 
     def insert_new_user(self):
@@ -269,5 +268,5 @@ class StudentQuery(Student):
         conn.close()
 
 
-d = AdminUser(310001121, 'Pepa', 'passpda')
+d = AdminUser(310001122, 'Pepa', 'passpda')
 print(CsControl.insert_new_user(d))
