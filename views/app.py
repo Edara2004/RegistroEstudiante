@@ -123,6 +123,7 @@ class RegisterUser(tk.LabelFrame):
                 else:
                     return messagebox.showerror(title="Error", message="Ninguna casilla debe estar vacía.")
 
+
         # Setup frame
         frame_register = LabelFrame(self)
         frame_register.grid_rowconfigure(0, weight=1)
