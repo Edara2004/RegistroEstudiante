@@ -1,51 +1,81 @@
-
 class Student:
-    def __init__(self, id_student_m: int, name: str, birthday: str, nationality: str, gender: str, email: str,
-                 register: str, semester: int, career: str) -> object:
-        self.id_student = id_student_m
-        self.name = name
-        self.birthday = birthday
-        self.nationality = nationality
-        self.gender = gender
-        self.email = email
-        self.register = register
-        self.semester = semester
-        self.career = career
+    def __init__(self, student_id: int, student_fullname: str, student_birthday: str, student_address: str, student_blood_type: str,
+                 student_phone_number: str, student_date_of_entry: str, student_gender: str, student_email: str, student_nationality: str) -> object:
+        self.student_id = student_id
+        self.student_fullname = student_fullname
+        self.student_birthday = student_birthday
+        self.student_address = student_address
+        self.student_blood_type = student_blood_type
+        self.student_phone_number = student_phone_number
+        self.student_date_of_entry = student_date_of_entry
+        self.student_gender = student_gender
+        self.student_email = student_email
+        self.student_nationality = student_nationality
 
-    def show_student_data(self):
-        return f'Data, {self.id_student_m}, {self.name}, {self.birthday}, {self.nationality}, {self.gender}, {self.email}, {self.register}, {self.semester}, {self.career}'
+    def student_id(self):
+        return self.student_id
 
-    def id_student_m(self):
-        return self.id_student_m
+    def student_fullname(self):
+        return self.student_fullname
 
-    def name(self):
-        return self.name
+    def student_birthday(self):
+        return self.student_birthday
 
-    def birthday(self):
-        return self.birthday
+    def student_address(self):
+        return self.student_address
 
-    def nationality(self):
-        return self.nationality
+    def student_blood_type(self):
+        return self.student_blood_type
 
-    def gender(self):
-        return self.gender
+    def student_phone_number(self):
+        return self.student_phone_number
 
-    def email(self):
-        return self.email
+    def student_date_of_entry(self):
+        return self.student_date_of_entry
 
-    def register(self):
-        return self.register
+    def student_gender(self):
+        return self.student_gender
 
-    def semester(self):
-        return self.semester
+    def student_email(self):
+        return self.student_email
 
-    def career(self):
-        return self.career
-
-
-# h2 = Notes(2, 3, 4)
-# print(h2.print_note())
+    def student_nationality(self):
+        return self.student_nationality
 
 
-# a = Student(3204565, "Marco Ayala", "2002-05-10", "Venezuela", "Masculino", "peppa_pig_magica@gmail.com", "Si", 5,"Sistemas")
-# print(a.show_student_data())
+class Parents:
+    def __init__(self, parents_id: int, parents_fullname: str, parents_birthday: str, parents_blood_type: str,
+                 parents_phone_number: str, parents_job: str, parents_address: str,
+                 parents_marital_status: str) -> object:
+        self.parents_id = parents_id
+        self.parents_fullname = parents_fullname
+        self.parents_birthday = parents_birthday
+        self.parents_blood_type = parents_blood_type
+        self.parents_phone_number = parents_phone_number
+        self.parents_job = parents_job
+        self.parents_address = parents_address
+        self.parents_marital_status = parents_marital_status
+
+    def parents_id(self):
+        return self.parents_id
+
+    def parents_fullname(self):
+        return self.parents_fullname
+
+    def parents_birthday(self):
+        return self.parents_birthday
+
+    def parents_blood_type(self):
+        return self.parents_blood_type
+
+    def parents_phone_number(self):
+        return self.parents_phone_number
+
+    def parents_job(self):
+        return self.parents_job
+
+    def parents_address(self):
+        return self.parents_address
+
+    def parents_marital_status(self):
+        return self.parents_marital_status

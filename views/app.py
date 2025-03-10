@@ -83,6 +83,7 @@ class LoginUser(tk.LabelFrame):
                                                         message="1. Rellenar todo el formulario\n"
                                                                 "2. Deben coincidir las contraseñas\n"
                                                                 "3. Colocar la clave admin de manera obligatoria")
+            return text_message_register
 
         # button Enter & Register
         button_label_enter_login = ttk.Button(frame_login, text="Entrar")
@@ -122,7 +123,6 @@ class RegisterUser(tk.LabelFrame):
                     True
                 else:
                     return messagebox.showerror(title="Error", message="Ninguna casilla debe estar vacía.")
-
 
         # Setup frame
         frame_register = LabelFrame(self)
