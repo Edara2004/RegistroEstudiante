@@ -14,35 +14,77 @@ cursor = connect_data.cursor()
 # Create table if no exists
 
 sql_statements = """
-CREATE TABLE IF NOT EXISTS data_user (
-id	INTEGER,
-name	TEXT NOT NULL,
-birthday	TEXT NOT NULL,
-nationality TEXT NOT NULL,
-gender	TEXT NOT NULL,
-email	TEXT NOT NULL,
-register	TEXT,
-semester	INTEGER NOT NULL,
-career	TEXT NOT NULL,
-time TEXT,
-PRIMARY KEY("id" AUTOINCREMENT));
-	
-CREATE TABLE IF NOT EXISTS grades_student (
-id_grade_student INTEGER NOT NULL,
-mathematics REAL,
-physics REAL,
-english REAL,
-chemistry REAL,
-semester REAL,
-time_grade TEXT,
-FOREIGN KEY (id_grade_student) REFERENCES data_user (id));
-
-CREATE TABLE IF NOT EXISTS UserDB (
-id_user INTEGER,
-username TEXT NOT NULL,
+CREATE TABLE IF NOT EXISTS client (
+username TEXT UNIQUE NOT NULL,
 password TEXT NOT NULL,
-PRIMARY KEY("id_user" AUTOINCREMENT),
-FOREIGN KEY (id_user) REFERENCES data_user (id)) 
+secret_answer TEXT NOT NULL);
+
+CREATE TABLE IF NOT EXISTS students (
+student_id INTEGER UNIQUE,
+fullname_student TEXT NOT NULL,
+birthday TEXT NOT NULL,
+address TEXT NOT NULL,
+blood_type TEXT,
+phone_number TEXT,
+date_of_entry TEXT,
+gender TEXT NOT NULL,
+email TEXT,
+nationality TEXT NOT NULL,
+PRIMARY KEY ("student_id")
+);
+
+CREATE TABLE IF NOT EXISTS subjects (
+id INTEGER NOT NULL,
+FOREIGN KEY (id) REFERENCES Students (student_id));
+
+CREATE TABLE IF NOT EXISTS legal_representative (
+legal_represented_id INTEGER NOT NULL,
+legal_representative_id INTEGER,
+legal_fullname TEXT NOT NULL,
+legal_representative_photo BLOG,
+legal_birthday TEXT NOT NULL,
+legal_blood_type TEXT,
+legal_phone_number TEXT,
+legal_job TEXT,
+legal_address TEXT,
+legal_marital_status TEXT NOT NULL,
+legal_nationality TEXT,
+FOREIGN KEY (legal_represented_id) REFERENCES Students (student_id));
+
+CREATE TABLE IF NOT EXISTS student_father (
+father_student_id INTEGER NOT NULL,
+father_id INTEGER NOT NULL,
+father_fullname TEXT NOT NULL,
+father_birthday TEXT NOT NULL,
+father_blood_type TEXT,
+father_phone_number TEXT NOT NULL,
+father_job TEXT,
+father_address TEXT,
+father_marital_status TEXT NOT NULL,
+father_nationality TEXT,
+FOREIGN KEY (father_student_id) REFERENCES Students (student_id)
+);
+
+CREATE TABLE IF NOT EXISTS student_mother (
+mother_student_id INTEGER NOT NULL,
+mother_id INTEGER NOT NULL,
+mother_fullname TEXT NOT NULL,
+mother_birthday TEXT NOT NULL,
+mother_blood_type TEXT,
+mother_phone_number TEXT NOT NULL,
+mother_job TEXT,
+mother_address TEXT,
+mother_marital_status TEXT NOT NULL,
+mother_nationality TEXT,
+FOREIGN KEY (mother_student_id) REFERENCES Students (student_id)
+);
+
+CREATE TABLE IF NOT EXISTS reports (
+reports_student_id INTEGER NOT NULL,
+absences TEXT,
+reports_details TEXT,
+FOREIGN KEY (reports_student_id) REFERENCES Students (student_id)
+)
 """
 
 cursor.executescript(sql_statements)
@@ -55,15 +97,15 @@ class CsControl(AdminUser):
         AdminUser.__init__(self, id_user, username, password)
 
     def insert_new_user(self):
-        conn = sqlite3.connect('..//data_student.db')
+        conn = sqlite3.connect('..//prueba3.db')
         c = conn.cursor()
         try:
             c.execute(
-                "INSERT INTO UserDB VALUES (:id_user, :username, :password)",
+                "INSERT INTO client VALUES (:username, :password, :secret_answer)",
                 {
-                    'id_user': self.id_user,
                     'username': self.username,
-                    'password': self.password_encrypt()
+                    'password': self.password_encrypt(),
+                    'secret_answer': self.secret_answer_encrypt()
                 }
             )
             conn.commit()
@@ -112,7 +154,6 @@ class CsControl(AdminUser):
 class GradeQueries(GradeStudent):
     def __init__(self, id_grade_reference: int, id_grade_student: int, mathematics: int, physics: int, english: int,
                  chemistry: int, semester: int):
-        sqlite3.__init__()
         super().__init__(id_grade_student, mathematics, physics, english, chemistry, semester)
         self.id_grade_reference = id_grade_reference
 
@@ -181,17 +222,18 @@ class GradeQueries(GradeStudent):
             conn.close()
 
 
-class StudentQuery(Student):
+class StudentData(Student):
     def __init__(self, id_reference: int, career_: str, id_student, name, birthday, nationality, gender, email,
                  register, semester, career):
-        sqlite3.__init__()
+        
         Student.__init__(self, id_student, name, birthday, nationality, gender, email, register, semester, career)
         self.id_reference = id_reference
         self.career_ = career_
 
     # Connect Database
 
-    def connect_data_base(self):
+
+    def connect_data_base():
         conn = sqlite3.connect("..//data_student.db")
         cursor = conn.cursor()
         return conn, cursor
@@ -264,9 +306,10 @@ class StudentQuery(Student):
             conn.close()
 
     # Close Database function
-    def close_database(self, conn):
+    @staticmethod
+    def close_database(conn):
         conn.close()
 
 
-d = AdminUser(310001122, 'Pepa', 'passpda')
+d = AdminUser(310001124, 'Pepa', 'passpda')
 print(CsControl.insert_new_user(d))
