@@ -67,12 +67,10 @@ class CsControl(AdminUser):
 
 
 class StudentData(Student):
-    def __init__(self, id_reference: int, career_: str, id_student, name, birthday, nationality, gender, email,
-                 register, semester, career):
-
-        Student.__init__(self, id_student, name, birthday, nationality, gender, email, register, semester, career)
-        self.id_reference = id_reference
-        self.career_ = career_
+    def __init__(self, student_id: int, student_fullname: str, student_birthday: str, student_address: str, student_blood_type: str,
+                 student_phone_number: str, student_date_of_entry: str, student_gender: str, student_email: str, student_nationality: str):
+        Student.__init__(self, student_id, student_fullname, student_birthday, student_address, student_blood_type, student_phone_number,
+                         student_date_of_entry, student_gender, student_email, student_nationality)
 
     # Connect Database
 
@@ -83,11 +81,11 @@ class StudentData(Student):
 
     # Get Function
 
-    def get_student(id_reference):
+    def get_student(self):
         conn = sqlite3.connect("..//data_student.db")
         c = conn.cursor()
         try:
-            c.execute("SELECT * FROM data_user WHERE id=?", (id_reference,))
+            c.execute("SELECT * FROM data_user WHERE id=?", (Student.student_id(),))
             data_ = c.fetchone()
             return data_
         except sqlite3.Error as e:
@@ -129,18 +127,18 @@ class StudentData(Student):
         c = conn.cursor()
         try:
             c.execute(
-                "INSERT INTO data_user VALUES (:id, :name, :birthday, :nationality, :gender, :email, :register, :semester, :career, :time)",
+                "INSERT INTO students VALUES (:student_id, :fullname, :birthday, :address, :blood_type,"
+                " :phone_number, :date_of_entry, :gender, :email)",
                 {
-                    'id': self.id_student,
-                    'name': self.name,
-                    'birthday': self.birthday,
-                    'nationality': self.nationality,
-                    'gender': self.gender,
-                    'email': self.email,
-                    'register': self.register,
-                    'semester': self.semester,
-                    'career': self.career,
-                    'time': time_register()})
+                    'student_id': self.id_student,
+                    'fullname': self.student_fullname,
+                    'birthday': self.student_birthday,
+                    'address': self.student_address,
+                    'blood_type': self.student_blood_type,
+                    'phone_number': self.student_phone_number,
+                    'date_of_entry': self.student_date_of_entry,
+                    'gender': self.student_gender,
+                    'email': self.student_email})
             conn.commit()
         except sqlite3.Error as e:
             print(e)
@@ -148,69 +146,70 @@ class StudentData(Student):
         finally:
             conn.close()
 
-    class GradeQueries(StudentSubjects):
-        def __init__(self, id_grade_reference: int):
-            self.id_grade_reference = id_grade_reference
 
-        # Get grades
-        def get_notes(id_grade_reference) -> list:
-            conn = sqlite3.connect('..//data_student.db')
-            c = conn.cursor()
-            try:
-                c.execute("SELECT * FROM grades_student WHERE id_grade_student=?", (id_grade_reference,))
-                data_ = c.fetchone()
-                return data_
-            except sqlite3.Error as e:
-                print(e)
-                return None
-            finally:
-                conn.close()
+class GradeQueries(StudentSubjects):
+    def __init__(self, id_grade_reference: int):
+        self.id_grade_reference = id_grade_reference
 
-        # Insert grades
-        def insert_notes(self):
-            conn = sqlite3.connect('..//data_student.db')
-            c = conn.cursor()
-            try:
-                c.execute(
-                    "INSERT INTO grades_student VALUES (:id_grade_student, :mathematics, :physics, :english, :chemistry , :semester, :time)",
-                    {
-                        'id_grade_student': self.id_grade_student
+    # Get grades
+    def get_notes(id_grade_reference) -> list:
+        conn = sqlite3.connect('..//data_student.db')
+        c = conn.cursor()
+        try:
+            c.execute("SELECT * FROM grades_student WHERE id_grade_student=?", (id_grade_reference,))
+            data_ = c.fetchone()
+            return data_
+        except sqlite3.Error as e:
+            print(e)
+            return None
+        finally:
+            conn.close()
 
-                    })
-                conn.commit()
-            except sqlite3.Error as e:
-                print(e)
-                return None
-            finally:
-                conn.close()
+    # Insert grades
+    def insert_notes(self):
+        conn = sqlite3.connect('..//data_student.db')
+        c = conn.cursor()
+        try:
+            c.execute(
+                "INSERT INTO grades_student VALUES (:id_grade_student, :mathematics, :physics, :english, :chemistry , :semester, :time)",
+                {
+                    'id_grade_student': self.id_grade_student
+                    # Notes
+                })
+            conn.commit()
+        except sqlite3.Error as e:
+            print(e)
+            return None
+        finally:
+            conn.close()
 
-        # Update grades
-        def update_grade(id_grade_reference):
-            conn = sqlite3.connect('..//data_student.db')
-            c = conn.cursor()
-            try:
-                column_data = input("Write the column you use: ")  # input
-                data_updating = input("Write the data you wanna change: ")  # input
-                c.execute(f"UPDATE grades_student SET '{column_data}' = '{data_updating}' WHERE id_grade_student= ?",
-                          (id_grade_reference,))
-                conn.commit()
-            except sqlite3.Error as e:
-                print(e)
-            finally:
-                conn.close()
+    # Update grades
+    def update_grade(id_grade_reference):
+        conn = sqlite3.connect('..//data_student.db')
+        c = conn.cursor()
+        try:
+            column_data = input("Write the column you use: ")  # input
+            data_updating = input("Write the data you wanna change: ")  # input
+            c.execute(f"UPDATE grades_student SET '{column_data}' = '{data_updating}' WHERE id_grade_student= ?",
+                      (id_grade_reference,))
+            conn.commit()
+        except sqlite3.Error as e:
+            print(e)
+        finally:
+            conn.close()
 
-        # Delete grades
-        def delete_student(career_):
-            conn = sqlite3.connect('..//data_student.db')
-            c = conn.cursor()
-            grade_delete_data = input("¿Decide donde deseas eliminar?")  # Input
-            try:
-                c.execute(f"DELETE FROM grades_student WHERE {grade_delete_data} = ?", (career_,))
-                conn.commit()
-            except sqlite3.Error as e:
-                print(e)
-            finally:
-                conn.close()
+    # Delete grades
+    def delete_student(career_):
+        conn = sqlite3.connect('..//data_student.db')
+        c = conn.cursor()
+        grade_delete_data = input("¿Decide donde deseas eliminar?")  # Input
+        try:
+            c.execute(f"DELETE FROM grades_student WHERE {grade_delete_data} = ?", (career_,))
+            conn.commit()
+        except sqlite3.Error as e:
+            print(e)
+        finally:
+            conn.close()
 
     # Close Database function
     @staticmethod
