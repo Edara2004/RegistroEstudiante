@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to db
-connect_data = sqlite3.connect('../data_student.db')
+connect_data = sqlite3.connect('../student_data.db')
 cursor = connect_data.cursor()
 
 # Create table if no exists
@@ -27,8 +27,10 @@ PRIMARY KEY ("student_id")
 );
 
 CREATE TABLE IF NOT EXISTS subjects (
-id INTEGER NOT NULL,
-FOREIGN KEY (id) REFERENCES Students (student_id));
+student_subjects_id INTEGER NOT NULL,
+student_grades TEXT,
+student_notes TEXT,
+FOREIGN KEY (student_subjects_id) REFERENCES Students (student_id));
 
 CREATE TABLE IF NOT EXISTS legal_representative (
 legal_represented_id INTEGER NOT NULL,
