@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to db
-connect_data = sqlite3.connect('../student_data.db')
+connect_data = sqlite3.connect('..//student_data.db')
 cursor = connect_data.cursor()
 
 # Create table if no exists
@@ -14,7 +14,7 @@ secret_answer TEXT NOT NULL);
 
 CREATE TABLE IF NOT EXISTS students (
 student_id INTEGER UNIQUE,
-fullname_student TEXT NOT NULL,
+student_fullname TEXT NOT NULL,
 birthday TEXT NOT NULL,
 address TEXT NOT NULL,
 blood_type TEXT,
