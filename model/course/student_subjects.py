@@ -12,4 +12,3 @@ class StudentSubjects:
 
     def student_notes(self):
         return self.notes
-
