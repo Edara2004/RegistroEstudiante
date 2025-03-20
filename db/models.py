@@ -154,9 +154,6 @@ class StudentData(Student):
 class StudentSubjectsManager(StudentSubjects):
     def __init__(self, student_subjects_id: int, student_grades: str, notes=None):
         super().__init__(student_subjects_id, student_grades, notes)
-        self.student_subjects_id = student_subjects_id
-        self.student_grade = student_grades
-        self.notes = notes or {}
 
     # Create student
     def create_student(student_subjects_id, student_grade, notes):
@@ -213,21 +210,21 @@ class StudentSubjectsManager(StudentSubjects):
 
     # Update grades
     def update_student_notes(student_subjects_id, new_notes):
-        grade_obj = StudentSubjects.get_grade(student_subjects_id)
-        if grade_obj:
-            grade_obj.notes = new_notes
+        update_subjects_obj = StudentSubjectsManager.get_subjects(student_subjects_id)
+        if update_subjects_obj:
+            update_subjects_obj.notes = new_notes
             conn = sqlite3.connect('..//student_data.db')
             c = conn.cursor()
             c.execute(
                 "UPDATE student_grades SET notes = ? WHERE student_subjects_id = ?",
-                (json.dumps(grade_obj.notes), student_subjects_id)
+                (json.dumps(update_subjects_obj.notes), student_subjects_id)
             )
             conn.commit()
             conn.close()
 
     # Get subjects
     def get_subjects(self):
-        return list(self.notes.keys())
+        return list(self.notes.items())
 
     # Delete grades
     @staticmethod
@@ -239,11 +236,10 @@ class StudentSubjectsManager(StudentSubjects):
         conn.close()
 
     # Get subjects by student
-    @staticmethod
     def get_subjects_by_id(student_subjects_id):
-        subjects = StudentSubjects.get_subjects(student_subjects_id)
+        subjects = StudentSubjectsManager.get_students_subjects(student_subjects_id)
         if subjects:
-            return subjects.get_subjects(student_subjects_id)
+            return subjects.get_subjects()
         else:
             return None
 
@@ -251,43 +247,4 @@ class StudentSubjectsManager(StudentSubjects):
     @staticmethod
     def close_database(conn):
         conn.close()
-
-
-# It is to add a new column of x number
-class AddSubjects:
-    def __init__(self, table: str, column: str):
-        self.table = table
-        self.column = column
-
-    def add_column(table: str, column: str):
-        connect_db = sqlite3.connect('prueba3.db')
-        cursor_db = connect_db.cursor()
-
-        sql_statements_db = f"ALTER TABLE {table} ADD {column};"
-
-        cursor_db.executescript(sql_statements_db)
-
-        connect_db.close()
-
-    def delete_column(table: str, column: str):
-        connect_db = sqlite3.connect('prueba3.db')
-        cursor_db = connect_db.cursor()
-
-        sql_statements_db = f"ALTER TABLE {table} DROP COLUMN {column};"
-
-        cursor_db.executescript(sql_statements_db)
-
-        connect_db.close()
-
-    def rename_column(table: str, column: str):
-        connect_db = sqlite3.connect('prueba3.db')
-        cursor_db = connect_db.cursor()
-
-        sql_statements_db = f"ALTER TABLE {table} DROP COLUMN {column};"
-
-        cursor_db.executescript(sql_statements_db)
-
-        connect_db.close()
-
-
 
