@@ -27,58 +27,31 @@ PRIMARY KEY ("student_id")
 );
 
 CREATE TABLE IF NOT EXISTS subjects (
-student_subjects_id INTEGER NOT NULL,
+student_id INTEGER NOT NULL,
 student_grades TEXT,
 student_notes TEXT,
-FOREIGN KEY (student_subjects_id) REFERENCES Students (student_id));
+FOREIGN KEY (student_id) REFERENCES students (student_id));
 
-CREATE TABLE IF NOT EXISTS legal_representative (
-legal_represented_id INTEGER NOT NULL,
-legal_representative_id INTEGER,
-legal_fullname TEXT NOT NULL,
-legal_representative_photo BLOG,
-legal_birthday TEXT NOT NULL,
-legal_blood_type TEXT,
-legal_phone_number TEXT,
-legal_job TEXT,
-legal_address TEXT,
-legal_marital_status TEXT NOT NULL,
-legal_nationality TEXT,
-FOREIGN KEY (legal_represented_id) REFERENCES Students (student_id));
-
-CREATE TABLE IF NOT EXISTS student_father (
-father_student_id INTEGER NOT NULL,
-father_id INTEGER NOT NULL,
-father_fullname TEXT NOT NULL,
-father_birthday TEXT NOT NULL,
-father_blood_type TEXT,
-father_phone_number TEXT NOT NULL,
-father_job TEXT,
-father_address TEXT,
-father_marital_status TEXT NOT NULL,
-father_nationality TEXT,
-FOREIGN KEY (father_student_id) REFERENCES Students (student_id)
-);
-
-CREATE TABLE IF NOT EXISTS student_mother (
-mother_student_id INTEGER NOT NULL,
-mother_id INTEGER NOT NULL,
-mother_fullname TEXT NOT NULL,
-mother_birthday TEXT NOT NULL,
-mother_blood_type TEXT,
-mother_phone_number TEXT NOT NULL,
-mother_job TEXT,
-mother_address TEXT,
-mother_marital_status TEXT NOT NULL,
-mother_nationality TEXT,
-FOREIGN KEY (mother_student_id) REFERENCES Students (student_id)
-);
+CREATE TABLE IF NOT EXISTS student_relationship (
+student_id INTEGER NOT NULL,
+related_person_id INTEGER NOT NULL,
+relationship_type NOT NULL,
+fullname TEXT NOT NULL,
+person_photo BLOG,
+birthday TEXT NOT NULL,
+blood_type TEXT,
+phone_number TEXT,
+job TEXT,
+address TEXT,
+marital_status TEXT NOT NULL,
+nationality TEXT,
+FOREIGN KEY (student_id) REFERENCES students (student_id));
 
 CREATE TABLE IF NOT EXISTS reports (
-reports_student_id INTEGER NOT NULL,
+student_id INTEGER NOT NULL,
 absences TEXT,
 reports_details TEXT,
-FOREIGN KEY (reports_student_id) REFERENCES Students (student_id)
+FOREIGN KEY (student_id) REFERENCES students (student_id)
 )
 """
 

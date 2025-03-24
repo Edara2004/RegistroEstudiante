@@ -2,7 +2,7 @@ import sqlite3
 import json
 import bcrypt
 
-from model.users.student import Student
+from model.users.student import Student, Parents
 from model.users.admin_user import AdminUser
 from model.course.student_subjects import StudentSubjects
 
@@ -66,11 +66,11 @@ class CsControl(AdminUser):
             return False
 
 
-class StudentData(Student):
+class StudentManager(Student):
     def __init__(self, student_id: int, student_fullname: str, student_birthday: str, student_address: str,
                  student_blood_type: str, student_phone_number: str, student_date_of_entry: str,
                  student_gender: str, student_email: str, student_nationality: str):
-        Student.__init__(self, student_id, student_fullname, student_birthday, student_address, student_blood_type,
+        super().__init__(self, student_id, student_fullname, student_birthday, student_address, student_blood_type,
                          student_phone_number, student_date_of_entry, student_gender,
                          student_email, student_nationality)
 
@@ -248,3 +248,26 @@ class StudentSubjectsManager(StudentSubjects):
     def close_database(conn):
         conn.close()
 
+
+class LegalRepresentativeManager(Parents):
+    def __init__(self):
+        super().__init__()
+
+    def insert_student(self):
+        conn = sqlite3.connect('..//student_data.db')
+        c = conn.cursor()
+        # legal_represented_id = student_id
+        try:
+            c.execute(
+                "INSERT INTO legal_representative VALUES (:legal_represented_id, :legal_representative_id, :legal_fullname, :legal_representative_photo, :legal_birthday,"
+                ":legal_blood_type, :legal_phone_number, :legal_job, :legal_address, :legal_marital_status, :legal_nationality)",
+                {
+                    'student_id': self.student_id,
+                    })
+            conn.commit()
+        except sqlite3.Error as e:
+            print(e)
+            return None
+        finally:
+            conn.close()
+            

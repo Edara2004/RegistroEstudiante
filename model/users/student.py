@@ -46,7 +46,7 @@ class Student:
 class Parents:
     def __init__(self, parents_id: int, parents_fullname: str, parents_birthday: str, parents_blood_type: str,
                  parents_phone_number: str, parents_job: str, parents_address: str,
-                 parents_marital_status: str) -> object:
+                 parents_marital_status: str, parents_nationality: str) -> object:
         self.parents_id = parents_id
         self.parents_fullname = parents_fullname
         self.parents_birthday = parents_birthday
@@ -55,6 +55,7 @@ class Parents:
         self.parents_job = parents_job
         self.parents_address = parents_address
         self.parents_marital_status = parents_marital_status
+        self.parents_nationality = parents_nationality
 
     def parents_id(self):
         return self.parents_id
@@ -79,3 +80,6 @@ class Parents:
 
     def parents_marital_status(self):
         return self.parents_marital_status
+
+    def parents_nationality(self):
+        return self.parents_nationality
