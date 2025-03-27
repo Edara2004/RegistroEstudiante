@@ -43,43 +43,46 @@ class Student:
         return self.student_nationality
 
 
-class Parents:
-    def __init__(self, parents_id: int, parents_fullname: str, parents_birthday: str, parents_blood_type: str,
-                 parents_phone_number: str, parents_job: str, parents_address: str,
-                 parents_marital_status: str, parents_nationality: str) -> object:
-        self.parents_id = parents_id
-        self.parents_fullname = parents_fullname
-        self.parents_birthday = parents_birthday
-        self.parents_blood_type = parents_blood_type
-        self.parents_phone_number = parents_phone_number
-        self.parents_job = parents_job
-        self.parents_address = parents_address
-        self.parents_marital_status = parents_marital_status
-        self.parents_nationality = parents_nationality
+class RelatedPerson:
+    def __init__(self, student_id: int, related_person_id: int, relationship_type: str, related_person_fullname: str, related_person_photo: str,
+                 related_person_birthday: str, related_person_blood_type: str, related_person_phone_number: str, related_person_job: str, 
+                 related_person_address: str, related_person_marital_status: str, related_person_nationality: str) -> object:
+        self.student_id = student_id
+        self.related_person_id = related_person_id
+        self.relationship_type = relationship_type
+        self.related_person_fullname = related_person_fullname
+        self.related_person_photo = related_person_photo
+        self.related_person_birthday = related_person_birthday
+        self.related_person_blood_type = related_person_blood_type
+        self.related_person_phone_number = related_person_phone_number
+        self.related_person_job = related_person_job
+        self.related_person_address = related_person_address
+        self.related_person_marital_status = related_person_marital_status
+        self.related_person_nationality = related_person_nationality
 
-    def parents_id(self):
-        return self.parents_id
+    def related_person_id(self):
+        return self.related_person_id
 
-    def parents_fullname(self):
-        return self.parents_fullname
+    def related_person_fullname(self):
+        return self.related_person_fullname
 
-    def parents_birthday(self):
-        return self.parents_birthday
+    def related_person_birthday(self):
+        return self.related_person_birthday
 
-    def parents_blood_type(self):
-        return self.parents_blood_type
+    def related_person_blood_type(self):
+        return self.related_person_blood_type
 
-    def parents_phone_number(self):
-        return self.parents_phone_number
+    def related_person_phone_number(self):
+        return self.related_person_phone_number
 
-    def parents_job(self):
-        return self.parents_job
+    def related_person_job(self):
+        return self.related_person_job
 
-    def parents_address(self):
-        return self.parents_address
+    def related_person_address(self):
+        return self.related_person_address
 
-    def parents_marital_status(self):
-        return self.parents_marital_status
+    def related_person_marital_status(self):
+        return self.related_person_marital_status
 
-    def parents_nationality(self):
-        return self.parents_nationality
+    def related_person_nationality(self):
+        return self.related_person_nationality

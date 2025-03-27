@@ -2,58 +2,64 @@ import sqlite3
 import json
 import bcrypt
 
-from model.users.student import Student, Parents
+from model.users.student import Student, RelatedPerson
 from model.users.admin_user import AdminUser
 from model.course.student_subjects import StudentSubjects
 
 
 class CsControl(AdminUser):
-    def __init__(self, id_user, username, password):
-        AdminUser.__init__(self, id_user, username, password)
+    def __init__(self, db_path='..//student_data.db'):
+        super().__init__()
+        self.db_path = db_path
+        self.conn = sqlite3.connect(self.db_path)
+        self.c = self.conn.cursor()
+
+    # Close Database
+
+    def __del__(self):
+        self.conn.close()
+
+    # Insert new user
 
     def insert_new_user(self):
-        conn = sqlite3.connect('..//student_data.db')
-        c = conn.cursor()
         try:
-            c.execute(
+            self.c.execute(
                 "INSERT INTO client VALUES (:username, :password, :secret_answer)",
                 {
-                    'username': self.username,
+                    'username': self.username,  # Then encrypt
                     'password': self.password_encrypt(),
                     'secret_answer': self.secret_answer_encrypt()
                 }
             )
-            conn.commit()
+            self.conn.commit()
         except sqlite3.Error as e:
             print(e)
             return None
         finally:
-            conn.close()
+            self.conn.close()
 
-    def update_user(username):
-        conn = sqlite3.connect('..//student_data.db')
-        c = conn.cursor()
+    # Update user Data -> Change password
+    def update_user(self, username):
         try:
             column_data = input("Write the column you use: ")  # input
             data_updating = input("Write the data you wanna change: ")  # input
-            c.execute(f"UPDATE UserDB SET '{column_data}' = '{data_updating}' WHERE username= ?", (username,))
-            conn.commit()
+            self.c.execute(f"UPDATE UserDB SET '{column_data}' = '{data_updating}' WHERE username= ?", (username,))
+            self.conn.commit()
         except sqlite3.Error as e:
             print(e)
         finally:
-            conn.close()
+            self.conn.close()
 
-    def delete_user(username):
-        conn = sqlite3.connect('..//student_data.db')
-        c = conn.cursor()
+    # Delete user
+    def delete_user(self, username):
         user_delete_data = input("¿Decide donde deseas eliminar?")
         try:
-            c.execute(f"DELETE FROM UserDB WHERE {user_delete_data} = ?", (username,))
-            conn.commit()
+            self.c.execute(f"DELETE FROM UserDB WHERE {user_delete_data} = ?", (username,))
+            self.conn.commit()
         except sqlite3.Error as e:
             print(e)
         finally:
-            conn.close()
+            self.conn.close()
 
     def pass_user(self):
 
@@ -67,23 +73,18 @@ class CsControl(AdminUser):
 
 
 class StudentManager(Student):
-    def __init__(self, student_id: int, student_fullname: str, student_birthday: str, student_address: str,
-                 student_blood_type: str, student_phone_number: str, student_date_of_entry: str,
-                 student_gender: str, student_email: str, student_nationality: str):
-        super().__init__(self, student_id, student_fullname, student_birthday, student_address, student_blood_type,
-                         student_phone_number, student_date_of_entry, student_gender,
-                         student_email, student_nationality)
+    def __init__(self, db_path='..//student_data.db'):
+        super().__init__()
+        self.db_path = db_path
+        self.conn = sqlite3.connect(self.db_path)
+        self.c = self.conn.cursor()
 
-    # Connect Database
-
-    @staticmethod
-    def connect_data_base():
-        conn = sqlite3.connect("..//student_data.db")
-        cursor = conn.cursor()
-        return conn, cursor
+    def __del__(self):
+        self.conn.close()
 
     # Get Function
 
+    @staticmethod
     def get_student(student_id):
         conn = sqlite3.connect("..//student_data.db")
         c = conn.cursor()
@@ -126,10 +127,8 @@ class StudentManager(Student):
 
     # Insert function
     def insert_student(self):
-        conn = sqlite3.connect('..//student_data.db')
-        c = conn.cursor()
         try:
-            c.execute(
+            self.c.execute(
                 "INSERT INTO students VALUES (:student_id, :student_fullname, :birthday, :address, :blood_type,"
                 " :phone_number, :date_of_entry, :gender, :email, :nationality)",
                 {
@@ -143,17 +142,25 @@ class StudentManager(Student):
                     'gender': self.student_gender,
                     'email': self.student_email,
                     'nationality': self.student_nationality})
-            conn.commit()
+            self.conn.commit()
         except sqlite3.Error as e:
             print(e)
             return None
         finally:
-            conn.close()
+            self.conn.close()
 
 
 class StudentSubjectsManager(StudentSubjects):
-    def __init__(self, student_subjects_id: int, student_grades: str, notes=None):
-        super().__init__(student_subjects_id, student_grades, notes)
+    def __init__(self, db_path='..//student_data.db'):
+        super().__init__()
+        self.db_path = db_path
+        self.conn = sqlite3.connect(self.db_path)
+        self.c = self.conn.cursor()
+
+    # Close Database
+
+    def __del__(self):
+        self.conn.close()
 
     # Create student
     def create_student(student_subjects_id, student_grade, notes):
@@ -169,33 +176,28 @@ class StudentSubjectsManager(StudentSubjects):
 
     # Insert notes
     def insert_notes(self):
-        conn = sqlite3.connect('..//student_data.db')
-        c = conn.cursor()
         try:
-            c.execute(
+            self.c.execute(
                 "INSERT INTO subjects VALUES (:student_subjects_id, :student_grades, :student_notes)",
                 {
                     'student_subjects_id': self.student_subjects_id,
-                    'student_grades': self.student_grade,
+                    'student_grades': self.student_grades,
                     # To insert a json with the notes
                     'student_notes': json.dumps(self.notes)
                 })
-            conn.commit()
+            self.conn.commit()
         except sqlite3.Error as e:
             print(e)
             return None
         finally:
-            conn.close()
+            self.conn.close()
 
-    @staticmethod
-    def get_students_subjects(student_subjects_id):
-        conn = sqlite3.connect('..//student_data.db')
-        c = conn.cursor()
+    def get_students_subjects(self, student_subjects_id):
         try:
-            c.execute(
+            self.c.execute(
                 "SELECT student_subjects_id, student_grades, student_notes FROM subjects WHERE student_subjects_id = ?",
                 (student_subjects_id,))
-            row = c.fetchone()
+            row = self.c.fetchone()
             if row:
                 student_subjects_id, student_grades, notes_json = row
                 notes = json.loads(notes_json)
@@ -206,34 +208,29 @@ class StudentSubjectsManager(StudentSubjects):
             print(e)
             return None
         finally:
-            conn.close()
+            self.conn.close()
 
     # Update grades
-    def update_student_notes(student_subjects_id, new_notes):
+    def update_student_notes(self, student_subjects_id, new_notes):
         update_subjects_obj = StudentSubjectsManager.get_subjects(student_subjects_id)
         if update_subjects_obj:
             update_subjects_obj.notes = new_notes
-            conn = sqlite3.connect('..//student_data.db')
-            c = conn.cursor()
-            c.execute(
+            self.c.execute(
                 "UPDATE student_grades SET notes = ? WHERE student_subjects_id = ?",
                 (json.dumps(update_subjects_obj.notes), student_subjects_id)
             )
-            conn.commit()
-            conn.close()
+            self.conn.commit()
+            self.conn.close()
 
     # Get subjects
     def get_subjects(self):
         return list(self.notes.items())
 
     # Delete grades
-    @staticmethod
-    def delete_student(student_subjects_id):
-        conn = sqlite3.connect('..//student_data.db')
-        c = conn.cursor()
-        c.execute("DELETE FROM subjects WHERE student_subjects_id = ?", (student_subjects_id,))
-        conn.commit()
-        conn.close()
+    def delete_student(self, student_subjects_id):
+        self.c.execute("DELETE FROM subjects WHERE student_subjects_id = ?", (student_subjects_id,))
+        self.conn.commit()
+        self.conn.close()
 
     # Get subjects by student
     def get_subjects_by_id(student_subjects_id):
@@ -243,31 +240,40 @@ class StudentSubjectsManager(StudentSubjects):
         else:
             return None
 
-    # Close Database
-    @staticmethod
-    def close_database(conn):
-        conn.close()
 
-
-class LegalRepresentativeManager(Parents):
-    def __init__(self):
+class RelatedPersonStudentManager(RelatedPerson):
+    def __init__(self, db_path='..//student_data.db'):
         super().__init__()
+        self.db_path = db_path
+        self.conn = sqlite3.connect(self.db_path)
+        self.c = self.conn.cursor()
+
+    # CLose Database
+    def __del__(self):
+        self.conn.close()
 
     def insert_student(self):
-        conn = sqlite3.connect('..//student_data.db')
-        c = conn.cursor()
-        # legal_represented_id = student_id
         try:
-            c.execute(
-                "INSERT INTO legal_representative VALUES (:legal_represented_id, :legal_representative_id, :legal_fullname, :legal_representative_photo, :legal_birthday,"
-                ":legal_blood_type, :legal_phone_number, :legal_job, :legal_address, :legal_marital_status, :legal_nationality)",
+            self.c.execute(
+                "INSERT INTO legal_representative VALUES (:student_id, :related_person_id, :relationship_type, :fullname, :person_photo,"
+                ":birthday, :blood_type, :phone_number, :job, :address, :marital_status, nationality)",
                 {
                     'student_id': self.student_id,
-                    })
-            conn.commit()
+                    'related_person_id': self.related_person_id,
+                    'relationship_type': self.relationship_type,
+                    'fullname': self.related_person_fullname,
+                    'person_photo': self.related_person_photo,
+                    'birthday': self.related_person_birthday,
+                    'blood_type': self.related_person_blood_type,
+                    'phone_number': self.related_person_phone_number,
+                    'job': self.related_person_job,
+                    'address': self.related_person_address,
+                    'marital_status': self.related_person_marital_status,
+                    'nationality': self.related_person_nationality
+                })
+            self.conn.commit()
         except sqlite3.Error as e:
             print(e)
             return None
         finally:
-            conn.close()
-            
+            self.conn.close()
