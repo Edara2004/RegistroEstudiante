@@ -79,10 +79,11 @@ class LoginUser(tk.LabelFrame):
 
         # Show receive message
         def register_message_info():
-            text_message_register = messagebox.showinfo(title="Pasos para el registro de usuario",
-                                                        message="1. Rellenar todo el formulario\n"
-                                                                "2. Deben coincidir las contraseñas\n"
-                                                                "3. Colocar la clave admin de manera obligatoria")
+            text_message_register = messagebox.showinfo(title="Pasos para el registro de usuario.",
+                                                        message="1. Rellenar todo el formulario.\n"
+                                                                "2. El ID debe ser numerico.\n"
+                                                                "3. Colocar la clave admin de manera obligatoria.\n"
+                                                                "4. El ID es tu identificaion, de preferencia que sea algo que recuerdes facil.")
             return text_message_register
 
         # button Enter & Register
