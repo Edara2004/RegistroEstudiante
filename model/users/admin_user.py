@@ -8,14 +8,17 @@ class AdminUser:
         self.password = password
         self.secret_answer = secret_answer
 
-    def shw_ldts(self):
-        return f"{self.username} {self.password}"
+    def show_data(self):
+        return f" {self.username_encrypt()}\n {self.password_encrypt()}\n {self.secret_answer_encrypt()}"
 
     def g_username(self):
         return self.username
 
     def g_password(self):
         return self.password
+
+    def g_secret_answer(self):
+        return self.secret_answer
 
     # Password encrypts
     def password_encrypt(self):
@@ -30,7 +33,7 @@ class AdminUser:
 
         username = self.username
 
-        conn = sqlite3.connect('..//data_student.db')
+        conn = sqlite3.connect('../../student_data.db')
         c = conn.cursor()
         try:
             c.execute("SELECT password from UserDB WHERE username =?", (username,))
@@ -56,7 +59,7 @@ class AdminUser:
 
         username = self.username
 
-        conn = sqlite3.connect('..//data_student.db')
+        conn = sqlite3.connect('../../student_data.db')
         c = conn.cursor()
         try:
             c.execute("SELECT secret_answer from client WHERE username =?", (username,))
@@ -70,7 +73,29 @@ class AdminUser:
         finally:
             conn.close()
 
+    # Username encrypt
+    def username_encrypt(self):
+        text_user = self.username
+        pwd = text_user.encode('utf-8')
+        sal = bcrypt.gensalt()
+        encrypt_user = bcrypt.hashpw(pwd, sal)
 
+        return encrypt_user
 
-#d = AdminUser(129, 'Pepa', 'papda')
-#print(AdminUser.password_encrypt(d))
+    def get_username(self):
+
+        username = self.username
+
+        conn = sqlite3.connect('../../student_data.db')
+        c = conn.cursor()
+        try:
+            c.execute("SELECT secret_answer from client WHERE username =?", (username,))
+            data_ = c.fetchone()
+            # Username encrypt
+            ue = data_[0]
+            return ue
+        except sqlite3.Error as e:
+            print(e)
+            return None
+        finally:
+            conn.close()

@@ -8,58 +8,56 @@ from model.course.student_subjects import StudentSubjects
 
 
 class CsControl(AdminUser):
-    def __init__(self, db_path='..//student_data.db'):
+    def __init__(self):
         super().__init__()
-        self.db_path = db_path
-        self.conn = sqlite3.connect(self.db_path)
-        self.c = self.conn.cursor()
-
-    # Close Database
-
-    def __del__(self):
-        self.conn.close()
 
     # Insert new user
 
     def insert_new_user(self):
+        conn = sqlite3.connect('..//student_data.db')
+        c = conn.cursor()
         try:
-            self.c.execute(
+            c.execute(
                 "INSERT INTO client VALUES (:username, :password, :secret_answer)",
                 {
-                    'username': self.username,  # Then encrypt
+                    'username': self.username_encrypt(),  # Then encrypt
                     'password': self.password_encrypt(),
                     'secret_answer': self.secret_answer_encrypt()
                 }
             )
-            self.conn.commit()
+            conn.commit()
         except sqlite3.Error as e:
             print(e)
             return None
         finally:
-            self.conn.close()
+            conn.close()
 
     # Update user Data -> Change password
-    def update_user(self, username):
+    def update_user(username):
+        conn = sqlite3.connect('..//student_data.db')
+        c = conn.cursor()
         try:
             column_data = input("Write the column you use: ")  # input
             data_updating = input("Write the data you wanna change: ")  # input
-            self.c.execute(f"UPDATE UserDB SET '{column_data}' = '{data_updating}' WHERE username= ?", (username,))
-            self.conn.commit()
+            c.execute(f"UPDATE UserDB SET '{column_data}' = '{data_updating}' WHERE username= ?", (username,))
+            conn.commit()
         except sqlite3.Error as e:
             print(e)
         finally:
-            self.conn.close()
+            conn.close()
 
     # Delete user
-    def delete_user(self, username):
+    def delete_user(username):
         user_delete_data = input("¿Decide donde deseas eliminar?")
+        conn = sqlite3.connect('..//student_data.db')
+        c = conn.cursor()
         try:
-            self.c.execute(f"DELETE FROM UserDB WHERE {user_delete_data} = ?", (username,))
-            self.conn.commit()
+            c.execute(f"DELETE FROM UserDB WHERE {user_delete_data} = ?", (username,))
+            conn.commit()
         except sqlite3.Error as e:
             print(e)
         finally:
-            self.conn.close()
+            conn.close()
 
     def pass_user(self):
 
@@ -252,7 +250,7 @@ class RelatedPersonStudentManager(RelatedPerson):
     def __del__(self):
         self.conn.close()
 
-    def insert_student(self):
+    def insert_related_person_student(self):
         try:
             self.c.execute(
                 "INSERT INTO legal_representative VALUES (:student_id, :related_person_id, :relationship_type, :fullname, :person_photo,"
