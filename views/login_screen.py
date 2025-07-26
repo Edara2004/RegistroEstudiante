@@ -2,10 +2,11 @@ import tkinter as tk
 from tkinter import ttk, Checkbutton, messagebox
 from config.theme import *
 
+
 class LoginUser(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent, bg=PRIMARY_COLOR)
-        
+
         # Configurar grid responsive
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
@@ -17,11 +18,11 @@ class LoginUser(tk.Frame):
         def login():
             username = username_entry.get()
             password = password_entry.get()
-            
+
             if not username or not password:
                 messagebox.showerror("Campos incompletos", "Por favor, completa todos los campos antes de continuar.")
                 return
-            
+
             success, message = controller.db_manager.verify_login(username, password)
             if success:
                 messagebox.showinfo("¡Bienvenido!", message)
@@ -33,17 +34,18 @@ class LoginUser(tk.Frame):
         # Frame de login responsive
         frame_login = tk.Frame(self, bg=SECONDARY_COLOR, bd=2, relief="groove")
         frame_login.grid(row=0, column=0, sticky="nsew", padx=50, pady=50)
-        
+
         # Configurar grid del frame de login
         frame_login.grid_rowconfigure(0, weight=1)
         frame_login.grid_columnconfigure(0, weight=1)
-        
+
         # Contenedor interno para centrar contenido
         inner_frame = tk.Frame(frame_login, bg=SECONDARY_COLOR)
         inner_frame.grid(row=0, column=0, sticky="nsew", padx=40, pady=40)
 
         # Título
-        login_label = ttk.Label(inner_frame, text="INGRESA AL SISTEMA", font=FONT_TITLE, background=SECONDARY_COLOR, foreground=ACCENT_COLOR)
+        login_label = ttk.Label(inner_frame, text="INGRESA AL SISTEMA", font=FONT_TITLE, background=SECONDARY_COLOR,
+                                foreground=ACCENT_COLOR)
         login_label.pack(pady=(0, 20))
 
         # Usuario
@@ -64,7 +66,9 @@ class LoginUser(tk.Frame):
         password_label.pack(anchor="w", pady=(10, 0))
         password_entry = ttk.Entry(inner_frame, show="*", width=30)
         password_entry.pack(fill="x", pady=5)
-        register_show_password = Checkbutton(inner_frame, text="Mostrar", font=("Segoe UI", 9), command=show_hide_password, bg=SECONDARY_COLOR, activebackground=SECONDARY_COLOR)
+        register_show_password = Checkbutton(inner_frame, text="Mostrar", font=("Segoe UI", 9),
+                                             command=show_hide_password, bg=SECONDARY_COLOR,
+                                             activebackground=SECONDARY_COLOR)
         register_show_password.pack(anchor="w", pady=(0, 10))
 
         # Mensaje de registro
@@ -85,5 +89,6 @@ class LoginUser(tk.Frame):
         button_label_enter_login.pack(pady=(15, 5), fill="x")
         button_label_register_login = ttk.Button(inner_frame, text="Registrar", style='Success.TButton',
                                                  command=lambda: (register_message_info(),
-                                                                  controller.show_frame(controller.RegisterUser), clear_box()))
-        button_label_register_login.pack(pady=5, fill="x") 
+                                                                  controller.show_frame(controller.RegisterUser),
+                                                                  clear_box()))
+        button_label_register_login.pack(pady=5, fill="x")

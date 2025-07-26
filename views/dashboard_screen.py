@@ -42,6 +42,28 @@ class Dashboard(tk.Frame):
                                      justify="left")
         description_label.pack(pady=(0, 30))
 
+        # Frame para botones de funcionalidades
+        buttons_frame = tk.Frame(inner_frame, bg=SECONDARY_COLOR)
+        buttons_frame.pack(fill="x", pady=(0, 20))
+
+        # Botón Registrar Estudiante
+        register_student_button = ttk.Button(buttons_frame, text="📝 Registrar Estudiante", 
+                                            style='Success.TButton',
+                                            command=lambda: controller.show_frame(controller.StudentEntryScreen))
+        register_student_button.pack(pady=(0, 10), fill="x")
+
+        # Botón Ver Estudiantes (placeholder para futura funcionalidad)
+        view_students_button = ttk.Button(buttons_frame, text="👥 Ver Estudiantes", 
+                                         style='Primary.TButton',
+                                         command=lambda: controller.show_frame(controller.ShowStudentScreen))
+        view_students_button.pack(pady=(0, 10), fill="x")
+
+        # Botón Generar Reportes (placeholder para futura funcionalidad)
+        reports_button = ttk.Button(buttons_frame, text="📊 Generar Reportes", 
+                                   style='Primary.TButton',
+                                   command=lambda: controller.show_frame(controller.ReportsScreen))
+        reports_button.pack(pady=(0, 10), fill="x")
+
         # Botón de cerrar sesión
         def logout():
             response = messagebox.askyesno("Cerrar sesión", "¿Estás seguro de que quieres cerrar sesión?")
