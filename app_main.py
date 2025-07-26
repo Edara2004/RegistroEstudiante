@@ -16,16 +16,20 @@ from utils.styles import configure_styles
 from views.login_screen import LoginUser
 from views.register_screen import RegisterUser
 from views.dashboard_screen import Dashboard
+from views.student_entry_screen import StudentEntryScreen
+from views.show_student_screen import ShowStudentScreen
+from views.reports_screen import ReportsScreen
+
 
 class AppLogin(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         self.title(APP_TITLE)
-        
+
         # Configuración de pantalla completa
         self.state('zoomed')  # Pantalla completa en Windows
         self.configure(bg=PRIMARY_COLOR)
-        
+
         # Hacer la ventana responsive
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
@@ -44,7 +48,7 @@ class AppLogin(tk.Tk):
 
         # Inicializar frames
         self.frames = {}
-        for F in (LoginUser, RegisterUser, Dashboard):
+        for F in (LoginUser, RegisterUser, Dashboard, StudentEntryScreen, ShowStudentScreen, ReportsScreen):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -53,6 +57,9 @@ class AppLogin(tk.Tk):
         self.LoginUser = LoginUser
         self.RegisterUser = RegisterUser
         self.Dashboard = Dashboard
+        self.StudentEntryScreen = StudentEntryScreen
+        self.ShowStudentScreen = ShowStudentScreen
+        self.ReportsScreen = ReportsScreen
 
         self.show_frame(LoginUser)
 
@@ -61,11 +68,13 @@ class AppLogin(tk.Tk):
         frame = self.frames[cont]
         frame.tkraise()
 
+
 def main():
     """Función principal para ejecutar la aplicación"""
     root = AppLogin()
     root.resizable(True, True)
     root.mainloop()
 
+
 if __name__ == "__main__":
-    main() 
+    main()
